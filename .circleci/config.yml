@@ -3,16 +3,16 @@ version: 2.1
 executors:
   maven-executor:
     docker:
-      - image: maven:3.8.4-openjdk-11 # Utilisation d'une image avec Maven et OpenJDK 11
+      - image: maven:3.8.4-openjdk-11 # Use an image with Maven and OpenJDK 11
 
 jobs:
   build:
-    executor: maven-executor # Utilisation de l'exécuteur défini ci-dessus
+    executor: maven-executor # Use the defined executor
     steps:
-      - checkout # Vérifier le code source
+      - checkout # Check out the source code
       - run:
           name: Run Maven tests
-          command: mvn test # Exécuter les tests unitaires avec Maven
+          command: mvn test # Run unit tests with Maven
 
 workflows:
   version: 2
@@ -22,4 +22,4 @@ workflows:
           filters:
             branches:
               only:
-                - master # Exécu
+                - master # Execute only on the master branch
