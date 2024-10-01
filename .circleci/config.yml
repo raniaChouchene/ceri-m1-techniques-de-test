@@ -3,7 +3,7 @@ version: 2.1
 executors:
   maven-executor:
     docker:
-      - image: maven:3.8.4-openjdk-11 # Use an image with Maven and OpenJDK 11
+      - image: maven:3.8.4-openjdk-17 # Use an image with Maven and OpenJDK 11
 
 jobs:
   build:
