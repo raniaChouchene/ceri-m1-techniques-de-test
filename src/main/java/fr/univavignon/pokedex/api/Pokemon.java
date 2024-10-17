@@ -2,7 +2,7 @@ package fr.univavignon.pokedex.api;
 
 /**
  * Pokemon POJO.
- * 
+ *
  * @author fv
  */
 public final class Pokemon extends PokemonMetadata {
@@ -21,10 +21,10 @@ public final class Pokemon extends PokemonMetadata {
 
 	/** IV perfection percentage. **/
 	private final double iv;
-	
+
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param index Pokemon index.
 	 * @param name Pokemon name.
 	 * @param attack Attack level.
@@ -47,7 +47,7 @@ public final class Pokemon extends PokemonMetadata {
 			final int dust,
 			final int candy,
 			final double iv) {
-		super(index, name, attack, defense, stamina);
+		super(index, name, attack, defense, stamina); // Call to the parent class constructor
 		this.cp = cp;
 		this.hp = hp;
 		this.dust = dust;
@@ -55,11 +55,30 @@ public final class Pokemon extends PokemonMetadata {
 		this.iv = iv;
 	}
 
-	/** Combat Point getter getter. **/
+	/**
+	 * Constructor that accepts a PokemonMetadata object and uses its data.
+	 *
+	 * @param metadata PokemonMetadata object containing species information.
+	 * @param cp Pokemon cp.
+	 * @param hp Pokemon hp.
+	 * @param dust Required dust for upgrading this pokemon.
+	 * @param candy Required candy for upgrading this pokemon.
+	 * @param iv IV perfection percentage.
+	 */
+	public Pokemon(PokemonMetadata metadata, final int cp, final int hp, final int dust, final int candy, final double iv) {
+		super(metadata.getIndex(), metadata.getName(), metadata.getAttack(), metadata.getDefense(), metadata.getStamina());
+		this.cp = cp;
+		this.hp = hp;
+		this.dust = dust;
+		this.candy = candy;
+		this.iv = iv;
+	}
+
+	/** Combat Point getter. **/
 	public int getCp() {
 		return cp;
 	}
-	
+
 	/** HP getter. **/
 	public int getHp() {
 		return hp;
@@ -74,10 +93,9 @@ public final class Pokemon extends PokemonMetadata {
 	public int getCandy() {
 		return candy;
 	}
-	
+
 	/** IV getter. **/
 	public double getIv() {
 		return iv;
 	}
-	
 }
