@@ -3,7 +3,7 @@ version: 2.1
 executors:
   maven-executor:
     docker:
-      - image: maven:3.8.4-openjdk-17 # Use an image with Maven and OpenJDK 11
+      - image: maven:3.8.4-openjdk-17 # Use an image with Maven and OpenJDK 17
 
 jobs:
   build:
@@ -13,6 +13,9 @@ jobs:
       - run:
           name: Run Maven tests
           command: mvn test # Run unit tests with Maven
+      - codecov/upload: # Upload coverage report to Codecov
+          file: ./target/site/jacoco/jacoco.xml # Path to the coverage report
+          token: CODECOV_TOKEN # Use your Codecov token as an environment variable
 
 workflows:
   version: 2
@@ -23,10 +26,6 @@ workflows:
             branches:
               only:
                 - master # Execute only on the master branch
-                - upload-to-codecov:
-                    jobs:
-                      - checkout
-                      - codecov/upload
+
 orbs:
   codecov: codecov/codecov@4.0.1
-
