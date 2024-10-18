@@ -13,11 +13,9 @@ jobs:
       - run:
           name: Run Maven tests
           command: mvn test # Run unit tests with Maven
-      - run:
-          name: Upload to Codecov
-          command: |
-            bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -f ./target/site/jacoco/jacoco.xml
-          when: always # Always run this step, even if tests fail
+      - codecov/upload: # Upload coverage report to Codecov
+          file: ./target/site/jacoco/jacoco.xml # Path to the coverage report
+          token: CODECOV_TOKEN # Use your Codecov token as an environment variable
 
 workflows:
   version: 2
@@ -28,3 +26,6 @@ workflows:
             branches:
               only:
                 - master # Execute only on the master branch
+
+orbs:
+  codecov: codecov/codecov@4.0.1
