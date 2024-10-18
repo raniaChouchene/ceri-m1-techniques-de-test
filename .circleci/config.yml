@@ -23,3 +23,10 @@ workflows:
             branches:
               only:
                 - master # Execute only on the master branch
+                - upload-to-codecov:
+                    jobs:
+                      - checkout
+                      - codecov/upload
+orbs:
+  codecov: codecov/codecov@4.0.1
+
