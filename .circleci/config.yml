@@ -5,6 +5,7 @@ executors:
     docker:
       - image: maven:3.8.4-openjdk-17 # Use an image with Maven and OpenJDK 11
 
+
 jobs:
   build:
     executor: maven-executor # Use the defined executor
