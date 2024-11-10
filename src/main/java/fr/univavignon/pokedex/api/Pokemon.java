@@ -19,6 +19,7 @@ public final class Pokemon extends PokemonMetadata {
 	/** Required candy for upgrading this pokemon. **/
 	private final int candy;
 
+
 	/** IV perfection percentage. **/
 	private final double iv;
 
