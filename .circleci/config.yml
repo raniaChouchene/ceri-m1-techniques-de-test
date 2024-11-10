@@ -19,6 +19,13 @@ jobs:
       - run:
           name: Generate Coverage Report
           command: mvn jacoco:report
+      - run:
+          name: Run Checkstyle
+          command: mvn checkstyle:check
+      - store_artifacts:
+          path: target/checkstyle-result.xml  # Garde le rapport Checkstyle comme artifact
+      - store_artifacts:
+          path: target/checkstyle-result.html # Garde également une version HTML si disponible
 
   # Job to upload coverage to Codecov
   upload-codecov:
@@ -31,6 +38,7 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash) -t your-codecov-token
 
 workflows:
+  version: 2
   upload-to-codecov:
     jobs:
       - build-and-test
