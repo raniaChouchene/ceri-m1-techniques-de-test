@@ -1,37 +1,36 @@
-# UCE Génie Logiciel Avancé : Techniques de tests
+# Mon Projet
 
-## Introduction
+**Nom et Prénom**: Chouchene Rania  
+**Groupe**: G1 classique M1 ILSEN 
 
-Vous allez à travers ces projet mettre en application une partie des aspects évoqués en cours vis à vis des techniques de tests.  
-Pour cela nous allons réaliser un projet logiciel de petite taille, en suivant la roadmap suivante : 
-- Setup du projet
-- Mise en place des outils d’intégration continue
-- Écriture des tests unitaires
-- Écriture des mocks, et validation des tests
-- Développement dirigé par les tests
-- Documentation et conventions de style
-- Test d'une implémentation donnée
+## Badges
+[![codecov](https://codecov.io/github/Rania2245/ceri-m1-techniques-de-test/graph/badge.svg?token=OGF8K4SKOT)](https://codecov.io/github/Rania2245/ceri-m1-techniques-de-test)
 
-Durant cette série de TPs, le gestionnaire de version Git sera utilisé à foison, à travers la plateforme GitHub. Si vous n’êtes pas à l’aise avec cet outil[^1], [voici](http://rogerdudler.github.io/git-guide/) un petit guide à garder sous la main.
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/8xP7i7kutk8fowA52YizE3/5vTXjkExPP9eLTud7TA2wA/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/8xP7i7kutk8fowA52YizE3/5vTXjkExPP9eLTud7TA2wA/tree/main)
 
-## Sujets
+## Description du Projet
 
-L'ensemble des sujets de TPs peut être trouvé dans le dossier `TPs`.
+Ce projet a pour objectif de mettre en place un environnement de développement où la qualité du code est surveillée en continu, ce qui contribue à créer des applications plus robustes et fiables
+configurer JaCoCo pour Générer des Rapports :
+JaCoCo est une bibliothèque qui s'intègre à Maven pour générer des rapports de couverture de code. En configurant JaCoCo dans votre projet, vous pouvez produire des rapports qui montrent quelles parties de votre code sont couvertes par les tests. Ces rapports sont essentiels pour identifier les zones non testées qui pourraient nécessiter des tests supplémentaires.
+Intégration avec CircleCI :
+CircleCI est un outil d'intégration continue qui automatise le processus de test. En configurant CircleCI pour exécuter vos tests et générer des rapports de couverture, vous vous assurez que chaque changement de code est validé avant d'être fusionné. Publier les résultats sur Codecov via CircleCI garantit que les résultats de couverture sont disponibles immédiatement après l'exécution des tests
 
-Le dossier `src` contient la définition de l'ensemble des interfaces qui seront l'objet de vos travaux.
 
-## Rendus
+## Choix Techniques
 
-Le rendu des TPs se fait au rythme suivant :
+- **Langages Utilisés** : 
+  - **Java** :utilisé pour créer les classes et les fonctions.
+ 
+ 
 
-- TP1 : 2ème séance
-- TP2 : 2ème séance
-- TP3 : 3ème séance
-- TP4 : 5ème séance
-- TP5 : dernière séance
-- TP6 : dernière séance
+- **Frameworks et Bibliothèques** : 
 
-Pour chaque rendu vous devez créer un tag à partir du commit qui correspond à la complétion du TP.  
-Si vous ne spécifiez pas de tag, le dernier commit à la date-heure de la fin de séance sera celui considéré.
+  - **JUnit et Mockito** : Pour écrire et exécuter des tests unitaires et d'intégration, garantissant la fiabilité du code.
 
-[^1]: Si vous n’êtes vraiment pas à l’aise avec cet outil nous vous conseillons quand même vivement de vous y mettre.
+- **Gestion de Versions** : 
+  - **Git** : Pour le suivi des modifications du code source et la collaboration en équipe. Utilisation de branches pour gérer les nouvelles fonctionnalités et les corrections de bugs.
+
+- **Intégration Continue** : 
+  - **CircleCI** : Configuré pour automatiser les tests à chaque push dans le dépôt, assurant que le code reste fonctionnel et sans erreurs.
+  - **Codecov** : Utilisé pour suivre la couverture des tests, permettant de s'assurer qu'une partie significative du code est testée.
