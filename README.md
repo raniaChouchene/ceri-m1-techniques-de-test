@@ -1,12 +1,14 @@
-# Mon Projet
+# tests
 
 **Nom et Prénom**: Chouchene Rania  
 **Groupe**: G1 classique M1 ILSEN 
-
 ## Badges
-[![codecov](https://codecov.io/github/Rania2245/ceri-m1-techniques-de-test/graph/badge.svg?token=OGF8K4SKOT)](https://codecov.io/github/Rania2245/ceri-m1-techniques-de-test)
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/8xP7i7kutk8fowA52YizE3/5vTXjkExPP9eLTud7TA2wA/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/8xP7i7kutk8fowA52YizE3/5vTXjkExPP9eLTud7TA2wA/tree/main)
+[![codecov](https://codecov.io/github/raniaChouchene/ceri-m1-techniques-de-test/graph/badge.svg?token=OGF8K4SKOT)](https://codecov.io/github/raniaChouchene/ceri-m1-techniques-de-test)
+
+[![CircleCI](https://circleci.com/gh/Rania2245/ceri-m1-techniques-de-test/tree/main.svg?style=svg)](https://circleci.com/gh/Rania2245/ceri-m1-techniques-de-test/tree/main)
+
+[![Checkstyle](https://img.shields.io/badge/Checkstyle-passed-brightgreen)](https://circleci.com/gh/Rania2245/ceri-m1-techniques-de-test/tree/main)
 
 ## Description du Projet
 
