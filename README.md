@@ -4,7 +4,7 @@
 **Groupe**: G1 classique M1 ILSEN 
 ## Badges
 
-[![codecov](https://codecov.io/github/Rania2245/ceri-m1-techniques-de-test/graph/badge.svg?token=OGF8K4SKOT)](https://codecov.io/github/Rania2245/ceri-m1-techniques-de-test) 
+[![codecov](https://codecov.io/github/raniaChouchene/ceri-m1-techniques-de-test/graph/badge.svg?token=OGF8K4SKOT)](https://codecov.io/github/raniaChouchene/ceri-m1-techniques-de-test)
 
 [![CircleCI](https://circleci.com/gh/Rania2245/ceri-m1-techniques-de-test/tree/main.svg?style=svg)](https://circleci.com/gh/Rania2245/ceri-m1-techniques-de-test/tree/main)
 
