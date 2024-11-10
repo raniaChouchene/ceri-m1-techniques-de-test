@@ -7,7 +7,7 @@ jobs:
   # Job to build and test the project
   build-and-test:
     docker:
-      - image: cimg/openjdk:21.0
+      - image: cimg/openjdk:17.0
     steps:
       - checkout
       - run:
@@ -30,7 +30,7 @@ jobs:
   # Job to upload coverage to Codecov
   upload-codecov:
     docker:
-      - image: cimg/openjdk:21.0
+      - image: cimg/openjdk:17.0
     steps:
       - checkout
       - run:
