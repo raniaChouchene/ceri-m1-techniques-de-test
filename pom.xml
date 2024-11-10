@@ -53,8 +53,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
-                    <configLocation>.github/workflows/checkstyle.yml</configLocation>
-                    <failOnViolation>true</failOnViolation>
+                    <configLocation>checkstyle.xml</configLocation>
                 </configuration>
                 <executions>
                     <execution>
