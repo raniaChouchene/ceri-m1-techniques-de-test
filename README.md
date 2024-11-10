@@ -5,7 +5,6 @@
 
 ## Badges
 [![codecov](https://codecov.io/github/Rania2245/ceri-m1-techniques-de-test/graph/badge.svg?token=OGF8K4SKOT)](https://codecov.io/github/Rania2245/ceri-m1-techniques-de-test) 
-
 [![CircleCI](https://undefined/status-badge/img/circleci/8xP7i7kutk8fowA52YizE3/5vTXjkExPP9eLTud7TA2wA/tree/main.svg?style=svg)](https://undefined/status-badge/redirect/circleci/8xP7i7kutk8fowA52YizE3/5vTXjkExPP9eLTud7TA2wA/tree/main)
 
 ## Description du Projet
