@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'  # Updated to match your pom.xml
-          distribution: 'adoptopenjdk'
+          distribution: 'temurin'  # Corrected distribution
 
       - name: Build project and generate Javadoc
         run: mvn clean install javadoc:javadoc
