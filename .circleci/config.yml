@@ -65,7 +65,7 @@ jobs:
             
             git add -A
             git commit -m "[skip ci] Updated Javadoc"
-            git push  origin/circleci-project-setup  --force 
+            git push circleci-project-setup  --force 
 
 workflows:
   version: 2
@@ -84,4 +84,4 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
