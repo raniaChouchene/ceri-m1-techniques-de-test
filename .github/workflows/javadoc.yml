@@ -28,7 +28,7 @@ jobs:
         run: |
           git config --global user.name "raniaChouchene"
           git config --global user.email "rania.chouchene.2019@gmail.com"
-          git clone --branch circleci-project-setup https://github.com/raniaChouchene/ceri-m1-techniques-de-test.git circleci-project-setup || git clone --single-branch --branch main https://github.com/raniaChouchene/ceri-m1-techniques-de-test.git circleci-project-setup
+          git clone --branch circleci-project-setup git@github.com:raniaChouchene/ceri-m1-techniques-de-test.git circleci-project-setup || git clone --single-branch --branch main https://github.com/raniaChouchene/ceri-m1-techniques-de-test.git circleci-project-setup
           cp -r target/site/apidocs/* circleci-project-setup/
           cd circleci-project-setup
           git add .
