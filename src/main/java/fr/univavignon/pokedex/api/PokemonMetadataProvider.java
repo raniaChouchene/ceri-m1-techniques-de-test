@@ -6,7 +6,7 @@ import java.util.List;
 public class PokemonMetadataProvider implements IPokemonMetadataProvider{
     static List<PokemonMetadata> pokemonMetadata=new ArrayList<>();;
 
-    // Initialisation statique des métadonnées (exemple de quelques Pokémons)
+
     static {
         pokemonMetadata.add(0, new PokemonMetadata(0, "Bulbizarre", 126, 126, 90));
     }
