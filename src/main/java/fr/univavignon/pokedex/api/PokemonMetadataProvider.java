@@ -1,21 +1,24 @@
 package fr.univavignon.pokedex.api;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PokemonMetadataProvider implements IPokemonMetadataProvider {
-    private static final Map<Integer, PokemonMetadata> metadataMap = new HashMap<>();
+public class PokemonMetadataProvider implements IPokemonMetadataProvider{
+    static List<PokemonMetadata> pokemonMetadata=new ArrayList<>();;
+
+    // Initialisation statique des métadonnées (exemple de quelques Pokémons)
+    static {
+        pokemonMetadata.add(0, new PokemonMetadata(0, "Bulbizarre", 126, 126, 90));
+    }
+
     @Override
-    public  PokemonMetadata getPokemonMetadata(int index) throws PokedexException {
-        try {
-            PokemonMetadata metadata = metadataMap.get(index);
+    public PokemonMetadata getPokemonMetadata(int index) throws PokedexException {
 
-            if (metadata == null) {
-                throw new PokedexException("No metadata found for Pokémon with index: " + index);
-            }
+        if(index<0 || index>=pokemonMetadata.size())
+            throw new PokedexException("index invalide");
+        PokemonMetadata pokemon=pokemonMetadata.get(index);
+        return pokemon;
+    }
 
-            return metadata;
-        } catch (Exception e) {
-            throw new PokedexException("Error retrieving Pokémon metadata");
-        }
-    }}
+
+}
