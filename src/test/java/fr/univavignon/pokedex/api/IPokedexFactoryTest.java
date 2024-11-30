@@ -1,25 +1,46 @@
 package fr.univavignon.pokedex.api;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class IPokedexFactoryTest {
-    IPokedexFactory iPokedexFactory;
+public class IPokedexFactoryTest{
+    private IPokedexFactory pokedexFactory;
+    private IPokemonMetadataProvider metadataProvider;
+    private IPokemonFactory pokemonFactory;
+    private IPokedex pokedex;
+
     @BeforeEach
-    void setup() {
-        iPokedexFactory=new PokedxFactory();
+    public void setUp() {
+
+        pokedexFactory = Mockito.mock(IPokedexFactory.class);
+
+
+        metadataProvider = Mockito.mock(IPokemonMetadataProvider.class);
+        pokemonFactory = Mockito.mock(IPokemonFactory.class);
+
+
+        pokedex = Mockito.mock(IPokedex.class);
+
+
+        when(pokedexFactory.createPokedex(metadataProvider, pokemonFactory)).thenReturn(pokedex);
     }
 
     @Test
     public void testCreatePokedex() {
-        IPokemonMetadataProvider pokemonMetadataProvider=Mockito.mock(IPokemonMetadataProvider.class);
-        IPokemonFactory pokemonFactory=Mockito.mock(IPokemonFactory.class);
 
-        IPokedex pokedex=iPokedexFactory.createPokedex(pokemonMetadataProvider, pokemonFactory);
-        assertNotNull(pokedex);
+        IPokedex createdPokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
+
+
+        assertNotNull(createdPokedex, "Created pokedex should not be null.");
+        assertEquals(pokedex, createdPokedex, "The created pokedex should match the expected instance.");
+
+
+        verify(pokedexFactory).createPokedex(metadataProvider, pokemonFactory);
     }
 }
