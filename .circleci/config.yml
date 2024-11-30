@@ -1,36 +1,30 @@
-
 version: 2.1
-
 orbs:
   codecov: codecov/codecov@4.0.1
-
-
 jobs:
 
   build-and-test:
 
     docker:
-
       - image: cimg/openjdk:20.0
-
-
     steps:
-
       - checkout
-
+          - run:
+          name: Debug directory structure
+          command: ls -R
 
       - run:
           name: Navigate to project directory
-          command: cd ceri-m1-techniques-de-test && mvn -B -DskipTests clean package
+          command: cd TestTech && mvn -B -DskipTests clean package
 
       - run:
           name: Unit tests with Jacoco
-          command: cd TP-techniques_de_test && mvn test jacoco:report
+          command: cd TestTech && mvn test jacoco:report
 
 
       - run:
           name: Checkstyle Analysis
-          command: cd TP-techniques_de_test && mvn checkstyle:checkstyle
+          command: cd TestTech && mvn checkstyle:checkstyle
 
 
       - run:
@@ -53,7 +47,7 @@ jobs:
       - run:
           name: Generate Javadoc
           command: |
-            cd TP-techniques_de_test && mvn javadoc:javadoc
+            cd ceri-m1-techniques-de-test && mvn javadoc:javadoc
 
 
       - add_ssh_keys:
@@ -62,7 +56,7 @@ jobs:
       - run:
           name: Install and configure gh-pages
           command: |
-            git config --global user.email "ci-build@YassmineEttaoufik.com"
+            git config --global user.email "ci-build@RaniaChouchene.com"
             git config --global user.name "ci-build"
 
             git clone git@github.com:${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git gh-pages
