@@ -54,6 +54,13 @@ jobs:
           fingerprints:
             - "38:69:46:7a:15:f0:1b:e5:4f:b2:8a:5b:32:37:be:a8"
       - run:
+          name: Check SSH key status
+          command: |
+            eval $(ssh-agent -s)
+            ssh-add ~/.ssh/id_rsa
+            ssh -T git@github.com
+
+      - run:
           name: Install and configure circleci-project-setup
           command: |
             git config --global user.email "ci-build@raniaChouchene.com"
