@@ -21,7 +21,7 @@ jobs:
 
       - run:
           name: Navigate to project directory
-          command: cd TP-techniques_de_test && mvn -B -DskipTests clean package
+          command: cd ceri-m1-techniques-de-test && mvn -B -DskipTests clean package
 
       - run:
           name: Unit tests with Jacoco
