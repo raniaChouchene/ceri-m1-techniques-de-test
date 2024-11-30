@@ -1,15 +1,14 @@
 version: 2.1
 orbs:
   codecov: codecov/codecov@4.0.1
+
 jobs:
-
   build-and-test:
-
     docker:
       - image: cimg/openjdk:20.0
     steps:
       - checkout
-          - run:
+      - run:
           name: Debug directory structure
           command: ls -R
 
@@ -21,15 +20,14 @@ jobs:
           name: Unit tests with Jacoco
           command: cd TestTech && mvn test jacoco:report
 
-
       - run:
           name: Checkstyle Analysis
           command: cd TestTech && mvn checkstyle:checkstyle
 
-
       - run:
           name: Upload coverage to Codecov
           command: bash <(curl -s https://codecov.io/bash)
+
   docs-deploy:
     docker:
       - image: cimg/openjdk:20.0
@@ -47,12 +45,13 @@ jobs:
       - run:
           name: Generate Javadoc
           command: |
-            cd ceri-m1-techniques-de-test && mvn javadoc:javadoc
+            cd doc && mvn javadoc:javadoc
 
-
+      # Add the SSH key using CircleCI's add_ssh_keys step
       - add_ssh_keys:
           fingerprints:
             - "38:69:46:7a:15:f0:1b:e5:4f:b2:8a:5b:32:37:be:a8"
+
       - run:
           name: Check SSH key status
           command: |
@@ -61,24 +60,27 @@ jobs:
             ssh -T git@github.com
 
       - run:
-          name: Install and configure circleci-project-setup
+          name: Install and configure doc
           command: |
             git config --global user.email "ci-build@raniaChouchene.com"
             git config --global user.name "ci-build"
 
-            git clone git@github.com:${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git circleci-project-setup
-            cd circleci-project-setup && git checkout -b circleci-project-setup       
-            cp -r TP-techniques_de_test/target/site/apidocs/* ./
+            # Clone the repository to 'doc' directory
+            git clone git@github.com:${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git doc || git clone https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git doc
             
+            cd doc
+            git checkout -b doc  # Create a new branch 'doc'
+
+            # Copy the generated Javadoc to the doc directory
+            cp -r TP-techniques_de_test/target/site/apidocs/* ./
+
             git add -A
             git commit -m "[skip ci] Updated Javadoc"
-            git push circleci-project-setup  --force 
+            git push origin doc --force  # Force-push the changes to the 'doc' branch
 
 workflows:
   version: 2
   sample-workflow:
-    when:
-      branch: master
     jobs:
       - build-and-test:
           filters:
@@ -91,4 +93,4 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - doc
