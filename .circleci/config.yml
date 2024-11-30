@@ -59,13 +59,13 @@ jobs:
             git config --global user.email "ci-build@RaniaChouchene.com"
             git config --global user.name "ci-build"
 
-            git clone git@github.com:${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git gh-pages
-            cd gh-pages && git checkout -b gh-pages        
+            git clone git@github.com:${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git circleci-project-setup
+            cd circleci-project-setup && git checkout -b circleci-project-setup       
             cp -r TP-techniques_de_test/target/site/apidocs/* ./
             
             git add -A
             git commit -m "[skip ci] Updated Javadoc"
-            git push origin gh-pages --force 
+            git push  origin/circleci-project-setup  --force 
 
 workflows:
   version: 2
