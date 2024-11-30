@@ -50,7 +50,7 @@ jobs:
       # Add the SSH key using CircleCI's add_ssh_keys step
       - add_ssh_keys:
           fingerprints:
-            - "38:69:46:7a:15:f0:1b:e5:4f:b2:8a:5b:32:37:be:a8"
+            - "SHA256:P05fkNEY6nUbs94nRH+xzeSUr4yuNx1pKOUsrfcs1/M"
 
       - run:
           name: Check SSH key status
