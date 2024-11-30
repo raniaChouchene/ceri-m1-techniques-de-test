@@ -1,39 +1,71 @@
 package fr.univavignon.pokedex.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class IPokemonTrainerFactoryTest {
+    IPokemonTrainerFactory iPokemonTrainerFactory;
+
+
+    @BeforeEach
+    void setup() {
+
+        iPokemonTrainerFactory=new PokemonTrainerFactory();
+    }
+
     @Test
     void testCreateTrainer() {
+        IPokedexFactory ipokedexFactory=Mockito.mock(IPokedexFactory.class);
+        IPokedex  iPokedex=Mockito.mock(IPokedex.class);
+        Mockito.when(ipokedexFactory.createPokedex(Mockito.any(), Mockito.any())).thenReturn(iPokedex);
 
-        IPokedexFactory pokedexFactory = Mockito.mock(IPokedexFactory.class);
-        IPokedex pokedex = Mockito.mock(IPokedex.class);
-        IPokemonMetadataProvider metadataProvider = Mockito.mock(IPokemonMetadataProvider.class);
-        IPokemonFactory pokemonFactory = Mockito.mock(IPokemonFactory.class);
+        PokemonTrainer trainerResult=iPokemonTrainerFactory.createTrainer("Ash",Team.INSTINCT,ipokedexFactory);
 
+        assertEquals("Ash",trainerResult.getName());
+        assertEquals(Team.INSTINCT,trainerResult.getTeam());
+        assertEquals(iPokedex,trainerResult.getPokedex());
 
-        when(pokedexFactory.createPokedex(metadataProvider, pokemonFactory)).thenReturn(pokedex);
+    }
 
-        IPokemonTrainerFactory trainerFactory = new IPokemonTrainerFactory() {
-            @Override
-            public PokemonTrainer createTrainer(String name, Team team, IPokedexFactory pokedexFactory) {
-                return new PokemonTrainer(name, team, pokedexFactory.createPokedex(metadataProvider, pokemonFactory));
-            }
-        };
+    @Test
+    void testCreateTrainerWithEmptyName() {
+        //création d'un entraineur sans nom
+        IPokedexFactory ipokedexFactory=Mockito.mock(IPokedexFactory.class);
+        IPokedex  iPokedex=Mockito.mock(IPokedex.class);
+        //création d'un PokemonTrainer
+        //Mockito.when(iPokemonTrainerFactory.createTrainer("", Team.MYSTIC, ipokedexFactory)).thenReturn(null);
+        Mockito.when(ipokedexFactory.createPokedex(Mockito.any(), Mockito.any())).thenReturn(iPokedex);
 
+        PokemonTrainer trainerResult=iPokemonTrainerFactory.createTrainer("",Team.MYSTIC,ipokedexFactory);
 
-        PokemonTrainer trainer = trainerFactory.createTrainer("Ash", Team.INSTINCT, pokedexFactory);
+        assertEquals(null,trainerResult);
 
+    }
 
-        assertEquals("Ash", trainer.getName());
-        assertEquals(Team.INSTINCT, trainer.getTeam());
-        assertEquals(pokedex, trainer.getPokedex());
+    @Test
+    void testCreateTrainerWithNullTeam() {
+        //création d'un entraineur sans équipe
+        IPokedexFactory ipokedexFactory=Mockito.mock(IPokedexFactory.class);
+        IPokedex  iPokedex=Mockito.mock(IPokedex.class);
+        Mockito.when(ipokedexFactory.createPokedex(Mockito.any(), Mockito.any())).thenReturn(iPokedex);
 
+        PokemonTrainer trainerResult=iPokemonTrainerFactory.createTrainer("Ash",null,ipokedexFactory);
 
-        verify(pokedexFactory, times(1)).createPokedex(metadataProvider, pokemonFactory);
-    }}
+        assertNull(trainerResult);
 
+    }
+
+    @Test
+    void testCreateTrainerWithNullPokedex() {
+        //création d'un entraineur sans pokedex
+        PokemonTrainer trainerResult=iPokemonTrainerFactory.createTrainer("Ash",Team.MYSTIC,null);
+
+        assertNull(trainerResult);
+
+    }
+
+}

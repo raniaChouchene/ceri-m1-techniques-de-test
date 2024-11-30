@@ -1,95 +1,122 @@
 package fr.univavignon.pokedex.api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 public class IPokedexTest {
-    private IPokedex pokedex;
-    private Pokemon pokemon1;
-    private Pokemon pokemon2;
+    IPokedex iPokedex;
+    IPokemonMetadataProvider pokemonProvider;
+    IPokemonFactory pokemonFactory;
 
     @BeforeEach
-    public void setUp() {
-        // Mock the IPokedex interface
-        pokedex = Mockito.mock(IPokedex.class);
+    void setup() {
+        pokemonProvider=Mockito.mock(IPokemonMetadataProvider.class);
+        pokemonFactory=Mockito.mock(IPokemonFactory.class);
+        iPokedex=new Pokedex((IPokemonFactory) pokemonProvider, (IPokemonMetadataProvider) pokemonFactory);
 
-        // Create sample Pokemon objects for testing
-        pokemon1 = new Pokemon(1, "Bulbasaur", 126, 126, 90, 613, 64, 4000, 4, 56);
-        pokemon2 = new Pokemon(2, "Ivysaur", 156, 158, 120, 1000, 100, 5000, 9, 120);
     }
 
     @Test
     public void testSize() {
+        int size=iPokedex.size();
 
-        when(pokedex.size()).thenReturn(2);
-
-        assertEquals(2, pokedex.size(), "Pokedex size should be 2.");
+        assertEquals(0,size);
     }
 
     @Test
     public void testAddPokemon() {
+        Pokemon aqualiData= new Pokemon(133,"Aquali",186,168,260,2729,202,5000,4,100);
+        int index=iPokedex.addPokemon(aqualiData);
 
-        when(pokedex.addPokemon(pokemon1)).thenReturn(1);
+        assertEquals(0,index);
 
-        int index = pokedex.addPokemon(pokemon1);
-        assertEquals(1, index, "The index of the added Pokemon should be 1.");
     }
 
     @Test
     public void testGetPokemon() throws PokedexException {
+        Pokemon aqualiData= new Pokemon(133,"Aquali",186,168,260,2729,202,5000,4,100);
 
-        when(pokedex.getPokemon(1)).thenReturn(pokemon1);
+        int pokemon=iPokedex.addPokemon(aqualiData);
+        Pokemon aquali=iPokedex.getPokemon(0);
 
-        Pokemon result = pokedex.getPokemon(1);
-        assertEquals(pokemon1, result, "The retrieved Pokemon should be Bulbasaur.");
+        assertEquals(133,aquali.getIndex());
+
     }
 
     @Test
-    public void testGetPokemonInvalidId() throws PokedexException {
-
-        when(pokedex.getPokemon(999)).thenThrow(new PokedexException("Invalid ID"));
-
-        assertThrows(PokedexException.class, () -> pokedex.getPokemon(999), "Should throw PokedexException for invalid ID.");
+    //test de l'invalidité d'un index
+    public void testGetPokemonInvalidIndex()throws PokedexException {
+        PokedexException exception=assertThrows(PokedexException.class,()->{
+            iPokedex.getPokemon(155);
+        });
+        assertEquals("index invalide",exception.getMessage());
     }
 
     @Test
-    public void testGetPokemons() {
-        // Mock the getPokemons() method
-        List<Pokemon> pokemons = new ArrayList<>();
-        pokemons.add(pokemon1);
-        pokemons.add(pokemon2);
-        when(pokedex.getPokemons()).thenReturn(pokemons);
+    public void tesGetPokemons() {
+        Pokemon aqualiData= new Pokemon(133,"Aquali",186,168,260,2729,202,5000,4,100);
+        Pokemon bulbizarreData= new Pokemon(0,"Bulbizarre",126,126,90,613,64,4000,4,56);
+        iPokedex.addPokemon(aqualiData);
+        iPokedex.addPokemon(bulbizarreData);
 
-        List<Pokemon> result = pokedex.getPokemons();
-        assertEquals(2, result.size(), "The list should contain 2 pokemons.");
-        assertTrue(result.contains(pokemon1), "The list should contain Bulbasaur.");
-        assertTrue(result.contains(pokemon2), "The list should contain Ivysaur.");
+        List<Pokemon> pokemonsResult=iPokedex.getPokemons();
+
+        //vérification de la taille de la liste
+        assertEquals(2,pokemonsResult.size());
+        assertEquals("Aquali",pokemonsResult.get(0).getName());
+        assertEquals("Bulbizarre",pokemonsResult.get(1).getName());
     }
 
     @Test
-    public void testGetPokemonsSorted() {
+    public void testGetPokemonsWithComparator() {
+        Pokemon aqualiData= new Pokemon(133,"Aquali",186,168,260,2729,202,5000,4,100);
+        Pokemon bulbizarreData= new Pokemon(0,"Bulbizarre",126,126,90,613,64,4000,4,56);
+        iPokedex.addPokemon(aqualiData);
+        iPokedex.addPokemon(bulbizarreData);
 
-        List<Pokemon> pokemons = new ArrayList<>();
-        pokemons.add(pokemon1);
-        pokemons.add(pokemon2);
-
-
-        when(pokedex.getPokemons(any(Comparator.class))).thenReturn(pokemons);
-
-
-        List<Pokemon> result = pokedex.getPokemons(Comparator.comparing(Pokemon::getName));
-        assertEquals(2, result.size(), "The list should contain 2 pokemons.");
-        assertEquals("Bulbasaur", result.get(0).getName(), "The first Pokemon should be Bulbasaur.");
+        List<Pokemon> pokemonsResult=iPokedex.getPokemons(PokemonComparators.INDEX);
+        assertEquals("Bulbizarre",pokemonsResult.get(0).getName());
+        assertEquals("Aquali",pokemonsResult.get(1).getName());
     }
 
+
+    @Test
+    public void testGetPokemonMetadata()throws PokedexException {
+
+        IPokemonMetadataProvider iPokemonMetadataProvider=new PokemonMetadataProvider();
+        PokemonMetadata bulbizarre=iPokemonMetadataProvider.getPokemonMetadata(0);
+
+        assertEquals(0,bulbizarre.getIndex());
+        assertEquals("Bulbizarre",bulbizarre.getName());
+        assertEquals(126,bulbizarre.getAttack());
+        assertEquals(126,bulbizarre.getDefense());
+        assertEquals(90,bulbizarre.getStamina());
+    }
+
+    @Test
+    public void testCreatePokemon() throws PokedexException {
+        Pokemon aqualiData= new Pokemon(133,"Aquali",186,168,260,2729,202,5000,4,100);
+        Mockito.when(pokemonProvider.getPokemonMetadata(133)).thenReturn(aqualiData);
+        IPokemonFactory iPokemonFactory=new PokemonFactory(pokemonProvider);
+        Pokemon result=iPokemonFactory.createPokemon(133, 2729, 202, 5000, 4);
+        assertNotNull(result);
+        assertEquals(133,result.getIndex());
+        assertEquals("Aquali",result.getName());
+        assertEquals(186,result.getAttack());
+        assertEquals(168,result.getDefense());
+        assertEquals(260,result.getStamina());
+        assertEquals(2729,result.getCp());
+        assertEquals(202,result.getHp());
+        assertEquals(5000,result.getDust());
+        assertEquals(4,result.getCandy());
+        assertEquals(73,result.getIv());
+    }
 }
