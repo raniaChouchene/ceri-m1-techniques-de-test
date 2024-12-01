@@ -14,15 +14,15 @@ jobs:
 
       - run:
           name: Navigate to project directory
-          command: cd TestTech && mvn -B -DskipTests clean package
+          command: mvn -B -DskipTests clean package
 
       - run:
           name: Unit tests with Jacoco
-          command: cd TestTech && mvn test jacoco:report
+          command: mvn test jacoco:report
 
       - run:
           name: Checkstyle Analysis
-          command: cd TestTech && mvn checkstyle:checkstyle
+          command: mvn checkstyle:checkstyle
 
       - run:
           name: Upload coverage to Codecov
@@ -66,10 +66,11 @@ jobs:
             git config --global user.name "ci-build"
 
             # Clone the repository to 'doc' directory
-            git clone git@github.com:${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git doc || git clone https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git doc
+            git clone git@github.com:${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git
+            
+            git checkout doc
             
             cd doc
-            git checkout -b doc  # Create a new branch 'doc'
 
             # Copy the generated Javadoc to the doc directory
             cp -r TP-techniques_de_test/target/site/apidocs/* ./
