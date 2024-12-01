@@ -22,13 +22,17 @@ jobs:
       - name: Build project and generate Javadoc
         run: mvn clean install javadoc:javadoc
 
+      - name: Clone project
+        uses: actions/checkout@v4
+        with:
+          ref: doc
+
       - name: Deploy Javadoc to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "raniaChouchene"
           git config --global user.email "rania.chouchene.2019@gmail.com"
-          git clone git@github.com:${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git circleci-project-setup || git clone --single-branch --branch main https://github.com/raniaChouchene/ceri-m1-techniques-de-test.git doc
+          git config --global user.name "Rania Chouchene"
           cp -r target/site/apidocs/* doc/
           cd doc
           git add .
