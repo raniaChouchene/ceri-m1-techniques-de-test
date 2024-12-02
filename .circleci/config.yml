@@ -2,6 +2,8 @@ version: 2.1
 orbs:
   codecov: codecov/codecov@4.0.1
 
+
+
 jobs:
   build-and-test:
     docker:
@@ -13,10 +15,6 @@ jobs:
           command: ls -R
 
       - run:
-          name: Navigate to project directory
-          command: mvn -B -DskipTests clean package
-
-      - run:
           name: Unit tests with Jacoco
           command: mvn test jacoco:report
 
@@ -25,59 +23,13 @@ jobs:
           command: mvn checkstyle:checkstyle
 
       - run:
-          name: Upload coverage to Codecov
-          command: bash <(curl -s https://codecov.io/bash)
-
-  docs-deploy:
-    docker:
-      - image: cimg/openjdk:20.0
-    steps:
-      - checkout
+          name: Install Codecov
+          command: |
+            bash <(curl -s https://codecov.io/bash)
 
       - run:
-          name: Set GIT_SSH_COMMAND to use the right SSH key
-          command: |
-            mkdir -p ~/.ssh
-            echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-            chmod 600 ~/.ssh/id_rsa
-            ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-      - run:
-          name: Generate Javadoc
-          command: |
-            cd doc && mvn javadoc:javadoc
-
-      # Add the SSH key using CircleCI's add_ssh_keys step
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:P05fkNEY6nUbs94nRH+xzeSUr4yuNx1pKOUsrfcs1/M"
-
-      - run:
-          name: Check SSH key status
-          command: |
-            eval $(ssh-agent -s)
-            ssh-add ~/.ssh/id_rsa
-            ssh -T git@github.com
-
-      - run:
-          name: Install and configure doc
-          command: |
-            git config --global user.email "ci-build@raniaChouchene.com"
-            git config --global user.name "ci-build"
-
-            # Clone the repository to 'doc' directory
-            git clone git@github.com:${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git
-            
-            git checkout doc
-            
-            cd doc
-
-            # Copy the generated Javadoc to the doc directory
-            cp -r TP-techniques_de_test/target/site/apidocs/* ./
-
-            git add -A
-            git commit -m "[skip ci] Updated Javadoc"
-            git push origin doc --force  # Force-push the changes to the 'doc' branch
+          name: List target directory
+          command: ls -R ./target
 
 workflows:
   version: 2
@@ -88,10 +40,3 @@ workflows:
             branches:
               only:
                 - master
-      - docs-deploy:
-          requires:
-            - build-and-test
-          filters:
-            branches:
-              only:
-                - doc
