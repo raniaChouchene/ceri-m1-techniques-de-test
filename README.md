@@ -36,3 +36,31 @@ CircleCI est un outil d'intégration continue qui automatise le processus de tes
 - **Intégration Continue** : 
   - **CircleCI** : Configuré pour automatiser les tests à chaque push dans le dépôt, assurant que le code reste fonctionnel et sans erreurs.
   - **Codecov** : Utilisé pour suivre la couverture des tests, permettant de s'assurer qu'une partie significative du code est testée.
+ 
+    
+
+
+## Analyse du code du Team Rocket :
+La classe RocketPokemonFactory implémente l'interface IPokemonFactory et génère des objets Pokemon en suivant la logique de la Team Rocket. Les principaux éléments à noter dans l'implémentation sont les suivants :
+
+## Map d'index à noms de Pokémon :
+
+Le code initialise une map immuable index2name qui associe des indices à des noms de Pokémon. Cela permet de retrouver un nom de Pokémon en fonction de son indice.
+Cependant, l’implémentation n'inclut pas de mappage pour certains indices et prévoit d'ajouter des noms de Pokémon via un commentaire (//TODO : Gotta map them all !).
+ ## Génération des statistiques de Pokémon :
+La méthode generateRandomStat() génère un nombre aléatoire entre 0 et 1 (en utilisant rn.nextInt(2)) et le répète un million de fois pour calculer une moyenne approximative. Cette approche est inefficace et lente. Elle semble volontairement exagérée pour générer un nombre aléatoire entre 0 et 15. Une méthode plus simple pourrait être utilisée.
+ ## Création de Pokémon :
+La méthode createPokemon() utilise l’indice pour déterminer le nom du Pokémon. Si l'indice n'est pas trouvé dans index2name, le nom par défaut est "MISSINGNO".
+Si l'indice est inférieur à 0, des statistiques spéciales sont attribuées au Pokémon (attack, defense, stamina à 1000 et iv à 0).
+Pour les autres indices, des statistiques aléatoires sont générées et l'IV est fixé à 1.
+Défauts potentiels et problèmes
+## Performances et efficacité :
+La méthode generateRandomStat() est inefficace. Elle effectue un grand nombre d'itérations inutiles pour générer un simple nombre entre 0 et 15. La méthode peut être remplacée par return new Random().nextInt(16);, ce qui est plus simple et performant.
+## Gestion de l'index non mappé :
+Si un indice non mappé est passé, le nom "MISSINGNO" est attribué. Bien que cela soit correct dans le contexte, il serait utile de s'assurer que des tests couvrent cette situation, notamment pour vérifier que l'implémentation est robuste et cohérente avec les attentes des autres parties du système.
+## L'IV est toujours à 1 sauf pour les indices négatifs :
+Pour les indices valides (supérieurs ou égaux à 0), l'IV est systématiquement défini à 1. Cela peut ne pas correspondre à la réalité des statistiques de Pokémon, où l'IV varie normalement en fonction des valeurs de l'attaque, de la défense et de l'endurance.
+Absence de gestion d'erreurs pour les indices invalides :
+
+Si un indice invalide (par exemple, un nombre trop grand ou un indice qui ne correspond à aucun Pokémon) est passé, le système renvoie "MISSINGNO", mais il pourrait être plus robuste en lançant une exception ou en gérant mieux ce cas avec des mécanismes de validation plus clairs.
+
