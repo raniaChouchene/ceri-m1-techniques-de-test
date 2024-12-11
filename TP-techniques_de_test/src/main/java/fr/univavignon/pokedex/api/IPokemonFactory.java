@@ -20,4 +20,6 @@ public interface IPokemonFactory {
 	Pokemon createPokemon(int index, int cp, int hp, int dust, int candy);
 
     Pokemon createPokemon(PokemonMetadata bulbizarreMetadata, int i, int i1, int i2, int i3, double v);
+
+
 }

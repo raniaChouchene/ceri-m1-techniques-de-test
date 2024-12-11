@@ -41,6 +41,5 @@ public class IPokedexFactoryTest{
         assertEquals(pokedex, createdPokedex, "The created pokedex should match the expected instance.");
 
 
-        verify(pokedexFactory).createPokedex(metadataProvider, pokemonFactory);
-    }
-}
+        verify(pokedexFactory).createPokedex(metadataProvider, pokemonFactory);}}
+    
