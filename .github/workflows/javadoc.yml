@@ -38,5 +38,5 @@ jobs:
           cd docs
           git add .
           git commit -m "Update Javadoc" || echo "ignore commit failure, proceed"
-          git push origin docs
+          git push -f origin docs
      
