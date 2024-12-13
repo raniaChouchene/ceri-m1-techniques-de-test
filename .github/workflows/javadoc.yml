@@ -33,8 +33,9 @@ jobs:
         run: |
           git config --global user.email "rania.chouchene.2019@gmail.com"
           git config --global user.name "Rania Chouchene"
+          mkdir -p doc
           cp -r target/site/apidocs/* doc/
           cd doc
           git add .
-          git commit -m "Update Javadoc"
+          git commit -m "Update Javadoc" || echo "ignore commit failure, proceed"
           git push origin doc
