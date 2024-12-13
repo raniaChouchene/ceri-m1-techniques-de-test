@@ -36,7 +36,8 @@ jobs:
           mkdir -p docs
           cp -r target/site/apidocs/* docs/
           cd docs
+          git pull origin docs
           git add .
           git commit -m "Update Javadoc" || echo "ignore commit failure, proceed"
-          git push -f origin docs
+          git push origin docs
      
