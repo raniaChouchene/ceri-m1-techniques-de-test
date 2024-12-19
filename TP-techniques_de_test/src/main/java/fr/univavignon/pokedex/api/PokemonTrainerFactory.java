@@ -12,6 +12,6 @@ public class PokemonTrainerFactory implements IPokemonTrainerFactory {
             return new PokemonTrainer(name, team, pokedex);
         }
         return null;
-    }
+    }s
 
 }

@@ -10,7 +10,6 @@ public class IPokedexFactoryTest {
     private IPokedexFactory pokedexFactory;
     private IPokemonMetadataProvider metadataProvider;
     private IPokemonFactory pokemonFactory;
-
     IPokedexFactory iPokedexFactory;
 
 

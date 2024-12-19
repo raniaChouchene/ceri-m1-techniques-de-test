@@ -51,7 +51,6 @@ public class RocketPokemonFactory implements IPokemonFactory {
         double iv;
 
         if (index < 0) {
-            // Special case for invalid Pokémon index
             attack = 1000;
             defense = 1000;
             stamina = 1000;
@@ -67,34 +66,5 @@ public class RocketPokemonFactory implements IPokemonFactory {
     }
 
 
-    /**
-     * Creates a Pokemon object based on the given metadata and additional parameters, including a specific IV.
-     *
-     * @param metadata Metadata containing Pokémon stats.
-     * @param cp       The combat power of the Pokémon.
-     * @param hp       The hit points of the Pokémon.
-     * @param dust     The stardust cost for powering up the Pokémon.
-     * @param candy    The candy cost for evolving the Pokémon.
-     * @param iv       The individual value (IV) of the Pokémon.
-     * @return A new Pokémon instance.
-     */
-    @Override
-    public Pokemon createPokemon(PokemonMetadata metadata, int cp, int hp, int dust, int candy, double iv) {
-        if (metadata == null) {
-            throw new IllegalArgumentException("PokemonMetadata cannot be null");
-        }
 
-        return new Pokemon(
-                metadata.getIndex(),
-                metadata.getName(),
-                metadata.getAttack(),
-                metadata.getDefense(),
-                metadata.getStamina(),
-                cp,
-                hp,
-                dust,
-                candy,
-                iv
-        );
-    }
 }
