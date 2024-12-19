@@ -17,16 +17,11 @@ public class IPokedexTest {
 
     @BeforeEach
     public void setUp() {
-
         IPokemonMetadataProvider metadataProvider = new PokemonMetadataProvider();
         IPokemonFactory pokemonFactory = new PokemonFactory();
         pokedex = new Pokedex(metadataProvider, pokemonFactory);
-
-
         pokemon1 = new Pokemon(1, "Bulbasaur", 126, 126, 90, 613, 64, 4000, 4, 56);
         pokemon2 = new Pokemon(2, "Ivysaur", 156, 158, 120, 1000, 100, 5000, 9, 120);
-
-
         pokedex.addPokemon(pokemon1);
         pokedex.addPokemon(pokemon2);
     }
