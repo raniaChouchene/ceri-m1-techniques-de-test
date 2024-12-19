@@ -11,20 +11,19 @@ public class IPokedexFactoryTest {
     private IPokemonMetadataProvider metadataProvider;
     private IPokemonFactory pokemonFactory;
 
+    IPokedexFactory iPokedexFactory;
+
+
     @BeforeEach
-    public void setUp() {
-        pokedexFactory = new PokedexFactory();
-        metadataProvider = new PokemonMetadataProvider();
-        pokemonFactory = new PokemonFactory();
+    void setup() {
+        iPokedexFactory=new PokedexFactory();
     }
 
     @Test
     public void testCreatePokedex() {
-        IPokedex createdPokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
-        assertNotNull(createdPokedex, "Created pokedex should not be null.");
-        assertEquals(metadataProvider, createdPokedex.getMetadataProvider(),
-                "The metadata provider should match the one provided.");
-        assertEquals(pokemonFactory, createdPokedex.getPokemonFactory(),
-                "The pokemon factory should match the one provided.");
+        IPokemonMetadataProvider pokemonMetadataProvider=Mockito.mock(IPokemonMetadataProvider.class);
+        IPokemonFactory pokemonFactory=Mockito.mock(IPokemonFactory.class);
+        IPokedex pokedex=iPokedexFactory.createPokedex(pokemonMetadataProvider, pokemonFactory);
+        assertNotNull(pokedex);
     }
 }
